@@ -8,10 +8,11 @@
 # agree to these terms before using or distributing this software.
 # 
 
-%define version		7.47.00.03full
+%define version		7.47.00.03
 %define release		%mkrel 3
 %define hxftarget	hsf
 %define hxftargetdir	%{_prefix}/lib/%{hxftarget}modem
+%define packname	%{name}-%{version}full
 
 Summary:   	Conexant HSF controllerless modem driver for Linux
 Name:      	%{hxftarget}modem
@@ -19,7 +20,7 @@ Version:   	%version
 Release:   	%release
 License: 	Copyright (c) 2003 Linuxant inc. All rights reserved.
 Group:		System/Kernel and hardware
-Source:    	http://www.linuxant.com/drivers/hsf/full/archive/%{name}-%{version}/%{name}-%{version}.tar.bz2
+Source:    	http://www.linuxant.com/drivers/hsf/full/archive/%{name}-%{version}/%{packname}.tar.bz2
 Source1:   	100498D_RM_HxF_Released.pdf
 Patch0:		hsfmodem-7.18.00.03full-disable_cfgkernel.patch.bz2
 Patch1:		hsfmodem-7.18.00.05full-initscripts.patch.bz2
@@ -110,7 +111,7 @@ Summary:   	Documentation for Conexant HSF controllerless modems
 This package contains the documentation for Conexant HSF controllerless modems.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n %{packname}
 %patch0 -p1 -b .cfg
 %patch1 -p1 -b .init
 
