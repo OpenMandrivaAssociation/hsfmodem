@@ -9,10 +9,19 @@
 # 
 
 %define version		7.60.00.09
-%define release		%mkrel 1
+%define release		%mkrel 2
 %define hxftarget	hsf
 %define hxftargetdir	%{_prefix}/lib/%{hxftarget}modem
-%define packname	%{name}-%{version}full
+%define arch_packname()	%{name}-%{version}%{1}full
+%define packname32	%{arch_packname %{nil}}
+%define packname64	%{arch_packname x86_64}
+%ifarch x86_64
+%define packname	%{packname64}
+%define packsrc		1
+%else
+%define packname	%{packname32}
+%define packsrc		0
+%endif
 
 Summary:   	Conexant HSF controllerless modem driver for Linux
 Name:      	%{hxftarget}modem
@@ -20,8 +29,9 @@ Version:   	%version
 Release:   	%release
 License: 	Copyright (c) 2003 Linuxant inc. All rights reserved.
 Group:		System/Kernel and hardware
-Source:    	http://www.linuxant.com/drivers/hsf/full/archive/%{name}-%{version}/%{packname}.tar.gz
-Source1:   	100498D_RM_HxF_Released.pdf
+Source0:    	http://www.linuxant.com/drivers/hsf/full/archive/%{name}-%{version}/%{packname32}.tar.gz
+Source1:    	http://www.linuxant.com/drivers/hsf/full/archive/%{name}-%{version}/%{packname64}.tar.gz
+Source2:   	100498D_RM_HxF_Released.pdf
 Patch0:		hsfmodem-7.18.00.03full-disable_cfgkernel.patch
 Patch1:		hsfmodem-7.18.00.05full-initscripts.patch
 # (blino) gcc -v does not match pattern in some locales (at least french)
@@ -31,7 +41,7 @@ BuildRoot:	%{_tmppath}/%{name}-buildroot
 Requires:  	pciutils
 Requires:	drakxtools >= 9.2-7mdk
 Conflicts: 	hsflinmodem
-ExclusiveArch:  %{ix86}
+ExclusiveArch:  %{ix86} x86_64
 
 %description
 Conexant HSF controllerless modem driver for Linux
@@ -113,7 +123,7 @@ Summary:   	Documentation for Conexant HSF controllerless modems
 This package contains the documentation for Conexant HSF controllerless modems.
 
 %prep
-%setup -q -n %{packname}
+%setup -q -T -b %{packsrc} -n %{packname}
 %patch0 -p1 -b .cfg
 %patch1 -p1 -b .init
 %patch2 -p1 -b .locale
@@ -122,7 +132,7 @@ This package contains the documentation for Conexant HSF controllerless modems.
 make all 
 make -C nvm
 make -C diag IMPORTED_BLAM_SUPPORT=yes
-cp %{SOURCE1} .
+cp %{SOURCE2} .
 
 %install
 rm -rf $RPM_BUILD_ROOT
