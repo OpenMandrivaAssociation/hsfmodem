@@ -9,7 +9,7 @@
 # 
 
 %define version		7.47.00.03full
-%define release		%mkrel 2
+%define release		%mkrel 3
 %define hxftarget	hsf
 
 Summary:   	Conexant HSF controllerless modem driver for Linux
@@ -98,7 +98,8 @@ drivers.
 %package -n dkms-%{name}
 Summary:   	Conexant HSF controllerless modem driver for Linux
 Group:		System/Kernel and hardware
-Requires:	dkms
+Requires(preun):	dkms
+Requires(post): dkms
 
 %description -n dkms-%{name}
 Conexant HSF controllerless modem driver support for Linux kernel %{kernel_version}
