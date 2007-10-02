@@ -29,6 +29,7 @@ BuildRoot:	%{_tmppath}/%{name}-buildroot
 Requires:  	pciutils
 Requires:	drakxtools >= 9.2-7mdk
 Conflicts: 	hsflinmodem
+ExclusiveArch:  %{ix86}
 
 %description
 Conexant HSF controllerless modem driver for Linux
