@@ -11,6 +11,7 @@
 %define version		7.47.00.03full
 %define release		%mkrel 3
 %define hxftarget	hsf
+%define hxftargetdir	%{_prefix}/lib/%{hxftarget}modem
 
 Summary:   	Conexant HSF controllerless modem driver for Linux
 Name:      	%{hxftarget}modem
@@ -203,7 +204,7 @@ set -x
 %{_sbindir}/%{hxftarget}dcpd
 %{_sbindir}/%{hxftarget}modconflicts
 %{_sbindir}/%{hxftarget}stop
-%{_libdir}/%{hxftarget}modem/rc%{hxftarget}
+%{hxftargetdir}/rc%{hxftarget}
 %defattr(0444, root, root, 755)
 %dir %{_sysconfdir}/%{name}
 %config %{_sysconfdir}/%{name}/*
