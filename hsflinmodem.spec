@@ -104,7 +104,7 @@ Requires(post): dkms
 Conexant HSF controllerless modem driver support for Linux kernel %{kernel_version}
 
 %package doc
-Group:     	Documentation
+Group:     	System/Kernel and hardware
 Summary:   	Documentation for Conexant HSF controllerless modems
 
 %description doc
