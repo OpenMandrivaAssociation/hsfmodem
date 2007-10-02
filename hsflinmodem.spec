@@ -21,9 +21,7 @@ Group:		System/Kernel and hardware
 Source:    	http://www.linuxant.com/drivers/hsf/full/archive/%{name}-%{version}/%{name}-%{version}.tar.bz2
 Source1:   	100498D_RM_HxF_Released.pdf
 Patch0:		hsfmodem-7.18.00.03full-disable_cfgkernel.patch.bz2
-Patch1:		2.6.12.patch.bz2
-Patch2:		gcc4.patch.bz2
-Patch3:		hsfmodem-7.18.00.05full-initscripts.patch.bz2
+Patch1:		hsfmodem-7.18.00.05full-initscripts.patch.bz2
 URL:       	http://www.linuxant.com/drivers/hcf
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 Requires:  	pciutils
@@ -113,9 +111,7 @@ This package contains the documentation for Conexant HSF controllerless modems.
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .cfg
-# %patch1 -p1 -b .2612
-# %patch2 -p1 -b .gcc4
-%patch3 -p1 -b .init
+%patch1 -p1 -b .init
 
 %build
 make all 
