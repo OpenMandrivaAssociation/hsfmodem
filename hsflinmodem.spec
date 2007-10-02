@@ -22,8 +22,8 @@ License: 	Copyright (c) 2003 Linuxant inc. All rights reserved.
 Group:		System/Kernel and hardware
 Source:    	http://www.linuxant.com/drivers/hsf/full/archive/%{name}-%{version}/%{packname}.tar.gz
 Source1:   	100498D_RM_HxF_Released.pdf
-Patch0:		hsfmodem-7.18.00.03full-disable_cfgkernel.patch.bz2
-Patch1:		hsfmodem-7.18.00.05full-initscripts.patch.bz2
+Patch0:		hsfmodem-7.18.00.03full-disable_cfgkernel.patch
+Patch1:		hsfmodem-7.18.00.05full-initscripts.patch
 URL:       	http://www.linuxant.com/drivers/hcf
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 Requires:  	pciutils
