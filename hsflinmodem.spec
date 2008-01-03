@@ -135,15 +135,15 @@ make -C diag IMPORTED_BLAM_SUPPORT=yes
 cp %{SOURCE2} .
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make -C scripts ROOT=$RPM_BUILD_ROOT install
-make -C diag ROOT=$RPM_BUILD_ROOT IMPORTED_BLAM_SUPPORT=yes install
-make -C nvm ROOT=$RPM_BUILD_ROOT install
+rm -rf %{buildroot}
+make -C scripts ROOT=%{buildroot} install
+make -C diag ROOT=%{buildroot} IMPORTED_BLAM_SUPPORT=yes install
+make -C nvm ROOT=%{buildroot} install
 
 # driver source
-mkdir -p $RPM_BUILD_ROOT/%{_usr}/src/%{name}-%{version}
-cp -r config.mak modules $RPM_BUILD_ROOT/%{_usr}/src/%{name}-%{version}
-cat > $RPM_BUILD_ROOT/%{_usr}/src/%{name}-%{version}/dkms.conf <<EOF
+mkdir -p %{buildroot}%{_usr}/src/%{name}-%{version}
+cp -r config.mak modules %{buildroot}/%{_usr}/src/%{name}-%{version}
+cat > %{buildroot}%{_usr}/src/%{name}-%{version}/dkms.conf <<EOF
 PACKAGE_NAME=%{name}
 PACKAGE_VERSION=%{version}
 
@@ -192,7 +192,7 @@ AUTOINSTALL=yes
 EOF
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %post
 %{_sbindir}/%{hxftarget}config --auto
