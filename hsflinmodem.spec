@@ -37,6 +37,7 @@ Patch1:		hsfmodem-7.18.00.05full-initscripts.patch
 # (blino) gcc -v does not match pattern in some locales (at least french)
 Patch2:		hsfmodem-7.60.00.09full-locale.patch
 URL:       	http://www.linuxant.com/drivers/hcf
+BuildRoot:	%{_tmppath}/%{name}-buildroot
 Requires:  	pciutils
 Requires:	drakxtools >= 9.2-7mdk
 Conflicts: 	hsflinmodem
