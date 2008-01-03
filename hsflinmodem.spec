@@ -9,7 +9,7 @@
 # 
 
 %define version		7.60.00.09
-%define release		%mkrel 2
+%define release		%mkrel 3
 %define hxftarget	hsf
 %define hxftargetdir	%{_prefix}/lib/%{hxftarget}modem
 %define arch_packname()	%{name}-%{version}%{1}full
@@ -40,6 +40,7 @@ URL:       	http://www.linuxant.com/drivers/hcf
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 Requires:  	pciutils
 Requires:	drakxtools >= 9.2-7mdk
+Requires:	kmod(hsfengine)
 Conflicts: 	hsflinmodem
 ExclusiveArch:  %{ix86} x86_64
 
