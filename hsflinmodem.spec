@@ -8,7 +8,7 @@
 # agree to these terms before using or distributing this software.
 # 
 
-%define version		7.68.00.14
+%define version		7.80.02.03
 %define release		%mkrel 1
 %define hxftarget	hsf
 %define hxftargetdir	%{_prefix}/lib/%{hxftarget}modem
@@ -32,8 +32,8 @@ Group:		System/Kernel and hardware
 Source0:    	http://www.linuxant.com/drivers/hsf/full/archive/%{name}-%{version}/%{packname32}.tar.gz
 Source1:    	http://www.linuxant.com/drivers/hsf/full/archive/%{name}-%{version}/%{packname64}.tar.gz
 Source2:   	100498D_RM_HxF_Released.pdf
-Patch0:		hsfmodem-7.18.00.03full-disable_cfgkernel.patch
-Patch1:		hsfmodem-7.18.00.05full-initscripts.patch
+Patch0:		hsfmodem-7.80.02.03full-disable_cfgkernel.patch
+Patch1:		hsfmodem-7.80.02.03full-initscripts.patch
 # (blino) gcc -v does not match pattern in some locales (at least french)
 Patch2:		hsfmodem-7.60.00.09full-locale.patch
 URL:       	http://www.linuxant.com/drivers/hcf
