@@ -8,7 +8,7 @@
 # agree to these terms before using or distributing this software.
 # 
 
-%define version		7.80.02.03
+%define version		7.80.02.04
 %define release		%mkrel 1
 %define hxftarget	hsf
 %define hxftargetdir	%{_prefix}/lib/%{hxftarget}modem
@@ -161,6 +161,7 @@ DEST_MODULE_LOCATION[9]=/kernel/drivers/char
 DEST_MODULE_LOCATION[10]=/kernel/drivers/char
 DEST_MODULE_LOCATION[11]=/kernel/drivers/char
 DEST_MODULE_LOCATION[12]=/kernel/drivers/char
+DEST_MODULE_LOCATION[13]=/kernel/drivers/char
 BUILT_MODULE_NAME[0]=%{hxftarget}engine
 BUILT_MODULE_LOCATION[0]=modules
 BUILT_MODULE_NAME[1]=%{hxftarget}mc97ali
@@ -173,20 +174,22 @@ BUILT_MODULE_NAME[4]=%{hxftarget}osspec
 BUILT_MODULE_LOCATION[4]=modules
 BUILT_MODULE_NAME[5]=%{hxftarget}pcibasic2
 BUILT_MODULE_LOCATION[5]=modules
-BUILT_MODULE_NAME[6]=%{hxftarget}serial
+BUILT_MODULE_NAME[6]=%{hxftarget}pcibasic3
 BUILT_MODULE_LOCATION[6]=modules
-BUILT_MODULE_NAME[7]=%{hxftarget}soar
+BUILT_MODULE_NAME[7]=%{hxftarget}serial
 BUILT_MODULE_LOCATION[7]=modules
-BUILT_MODULE_NAME[8]=%{hxftarget}usbcd2
+BUILT_MODULE_NAME[8]=%{hxftarget}soar
 BUILT_MODULE_LOCATION[8]=modules
-BUILT_MODULE_NAME[9]=%{hxftarget}hda
+BUILT_MODULE_NAME[9]=%{hxftarget}usbcd2
 BUILT_MODULE_LOCATION[9]=modules
-BUILT_MODULE_NAME[10]=%{hxftarget}mc97ati
+BUILT_MODULE_NAME[10]=%{hxftarget}hda
 BUILT_MODULE_LOCATION[10]=modules
-BUILT_MODULE_NAME[11]=%{hxftarget}mc97sis
+BUILT_MODULE_NAME[11]=%{hxftarget}mc97ati
 BUILT_MODULE_LOCATION[11]=modules
-BUILT_MODULE_NAME[12]=%{hxftarget}mc97via
+BUILT_MODULE_NAME[12]=%{hxftarget}mc97sis
 BUILT_MODULE_LOCATION[12]=modules
+BUILT_MODULE_NAME[13]=%{hxftarget}mc97via
+BUILT_MODULE_LOCATION[13]=modules
 MAKE[0]="make -C modules CNXT_KERNELSRC=\${kernel_source_dir}"
 
 AUTOINSTALL=yes
