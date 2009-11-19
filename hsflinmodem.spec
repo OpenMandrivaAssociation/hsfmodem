@@ -8,7 +8,7 @@
 # agree to these terms before using or distributing this software.
 # 
 
-%define version		7.80.02.04
+%define version		7.80.02.05
 %define release		%mkrel 1
 %define hxftarget	hsf
 %define hxftargetdir	%{_prefix}/lib/%{hxftarget}modem
@@ -32,6 +32,8 @@ Group:		System/Kernel and hardware
 Source0:    	http://www.linuxant.com/drivers/hsf/full/archive/%{name}-%{version}/%{packname32}.tar.gz
 Source1:    	http://www.linuxant.com/drivers/hsf/full/archive/%{name}-%{version}/%{packname64}.tar.gz
 Source2:   	100498D_RM_HxF_Released.pdf
+Source3:   	hsfbuild.sh
+Source4:   	hsfclean.sh
 Patch0:		hsfmodem-7.80.02.03full-disable_cfgkernel.patch
 Patch1:		hsfmodem-7.80.02.03full-initscripts.patch
 # (blino) gcc -v does not match pattern in some locales (at least french)
@@ -127,7 +129,7 @@ This package contains the documentation for Conexant HSF controllerless modems.
 %setup -q -T -b %{packsrc} -n %{packname}
 %patch0 -p1 -b .cfg
 %patch1 -p1 -b .init
-%patch2 -p1 -b .locale
+%patch2 -p1
 
 %build
 make all 
@@ -142,11 +144,14 @@ make -C diag ROOT=%{buildroot} IMPORTED_BLAM_SUPPORT=yes install
 make -C nvm ROOT=%{buildroot} install
 
 # driver source
-mkdir -p %{buildroot}%{_usr}/src/%{name}-%{version}
-cp -r config.mak modules %{buildroot}/%{_usr}/src/%{name}-%{version}
-cat > %{buildroot}%{_usr}/src/%{name}-%{version}/dkms.conf <<EOF
+mkdir -p %{buildroot}%{_usr}/src/%{name}-%{version}-%{release}
+cp -r %{_sourcedir}/hsfbuild.sh %{_sourcedir}/hsfclean.sh config.mak modules \
+	%{buildroot}/%{_usr}/src/%{name}-%{version}-%{release}
+install -m 0755 -d \
+	%{buildroot}/%{_usr}/src/%{name}-%{version}-%{release}/built_modules
+cat > %{buildroot}%{_usr}/src/%{name}-%{version}-%{release}/dkms.conf <<EOF
 PACKAGE_NAME=%{name}
-PACKAGE_VERSION=%{version}
+PACKAGE_VERSION=%{version}-%{release}
 
 DEST_MODULE_LOCATION[0]=/kernel/drivers/char
 DEST_MODULE_LOCATION[1]=/kernel/drivers/char
@@ -163,34 +168,35 @@ DEST_MODULE_LOCATION[11]=/kernel/drivers/char
 DEST_MODULE_LOCATION[12]=/kernel/drivers/char
 DEST_MODULE_LOCATION[13]=/kernel/drivers/char
 BUILT_MODULE_NAME[0]=%{hxftarget}engine
-BUILT_MODULE_LOCATION[0]=modules
+BUILT_MODULE_LOCATION[0]=built_modules
 BUILT_MODULE_NAME[1]=%{hxftarget}mc97ali
-BUILT_MODULE_LOCATION[1]=modules
+BUILT_MODULE_LOCATION[1]=built_modules
 BUILT_MODULE_NAME[2]=%{hxftarget}mc97ich
-BUILT_MODULE_LOCATION[2]=modules
+BUILT_MODULE_LOCATION[2]=built_modules
 BUILT_MODULE_NAME[3]=%{hxftarget}mc97via
-BUILT_MODULE_LOCATION[3]=modules
+BUILT_MODULE_LOCATION[3]=built_modules
 BUILT_MODULE_NAME[4]=%{hxftarget}osspec
-BUILT_MODULE_LOCATION[4]=modules
+BUILT_MODULE_LOCATION[4]=built_modules
 BUILT_MODULE_NAME[5]=%{hxftarget}pcibasic2
-BUILT_MODULE_LOCATION[5]=modules
+BUILT_MODULE_LOCATION[5]=built_modules
 BUILT_MODULE_NAME[6]=%{hxftarget}pcibasic3
-BUILT_MODULE_LOCATION[6]=modules
+BUILT_MODULE_LOCATION[6]=built_modules
 BUILT_MODULE_NAME[7]=%{hxftarget}serial
-BUILT_MODULE_LOCATION[7]=modules
+BUILT_MODULE_LOCATION[7]=built_modules
 BUILT_MODULE_NAME[8]=%{hxftarget}soar
-BUILT_MODULE_LOCATION[8]=modules
+BUILT_MODULE_LOCATION[8]=built_modules
 BUILT_MODULE_NAME[9]=%{hxftarget}usbcd2
-BUILT_MODULE_LOCATION[9]=modules
+BUILT_MODULE_LOCATION[9]=built_modules
 BUILT_MODULE_NAME[10]=%{hxftarget}hda
-BUILT_MODULE_LOCATION[10]=modules
+BUILT_MODULE_LOCATION[10]=built_modules
 BUILT_MODULE_NAME[11]=%{hxftarget}mc97ati
-BUILT_MODULE_LOCATION[11]=modules
+BUILT_MODULE_LOCATION[11]=built_modules
 BUILT_MODULE_NAME[12]=%{hxftarget}mc97sis
-BUILT_MODULE_LOCATION[12]=modules
+BUILT_MODULE_LOCATION[12]=built_modules
 BUILT_MODULE_NAME[13]=%{hxftarget}mc97via
-BUILT_MODULE_LOCATION[13]=modules
-MAKE[0]="make -C modules CNXT_KERNELSRC=\${kernel_source_dir}"
+BUILT_MODULE_LOCATION[13]=built_modules
+MAKE[0]="sh hsfbuild.sh \${kernel_source_dir}"
+CLEAN="sh hsfclean.sh"
 
 AUTOINSTALL=yes
 EOF
@@ -207,14 +213,14 @@ echo "Relaunch drakconnect to configure your Conexant HSF modem"
 
 %post -n dkms-%{name}
 set -x
-/usr/sbin/dkms --rpm_safe_upgrade add -m %name -v %version
-/usr/sbin/dkms --rpm_safe_upgrade build -m %name -v %version
-/usr/sbin/dkms --rpm_safe_upgrade install -m %name -v %version
+/usr/sbin/dkms --rpm_safe_upgrade add -m %{name} -v %{version}-%{release}
+/usr/sbin/dkms --rpm_safe_upgrade build -m %{name} -v %{version}-%{release}
+/usr/sbin/dkms --rpm_safe_upgrade install -m %{name} -v %{version}-%{release}
 :
 
 %preun -n dkms-%{name}
 set -x
-/usr/sbin/dkms --rpm_safe_upgrade remove -m %name -v %version --all
+/usr/sbin/dkms --rpm_safe_upgrade remove -m %{name} -v %{version}-%{release} --all
 :
 
 %files
@@ -234,8 +240,8 @@ set -x
 %defattr(-,root,root)
 %doc README
 %doc LICENSE
-%dir %{_usr}/src/%{name}-%{version}
-%{_usr}/src/%{name}-%{version}/*
+%dir %{_usr}/src/%{name}-%{version}-%{release}
+%{_usr}/src/%{name}-%{version}-%{release}/*
 
 %files doc
 %doc *.pdf
