@@ -9,7 +9,7 @@
 # 
 
 %define version		7.80.02.05
-%define release		%mkrel 1
+%define release		%mkrel 2
 %define hxftarget	hsf
 %define hxftargetdir	%{_prefix}/lib/%{hxftarget}modem
 %define arch_packname()	%{name}-%{version}%{1}full
