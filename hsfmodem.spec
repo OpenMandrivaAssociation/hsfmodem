@@ -34,6 +34,7 @@ Source1:    	http://www.linuxant.com/drivers/hsf/full/archive/%{name}-%{version}
 Source2:   	100498D_RM_HxF_Released.pdf
 Source3:   	hsfbuild.sh
 Source4:   	hsfclean.sh
+Source5:	hsfmodem-7.80.02.05-kernel-2.6.33.patch
 Patch0:		hsfmodem-7.80.02.03full-disable_cfgkernel.patch
 Patch1:		hsfmodem-7.80.02.03full-initscripts.patch
 # (blino) gcc -v does not match pattern in some locales (at least french)
@@ -146,7 +147,7 @@ make -C diag ROOT=%{buildroot} IMPORTED_BLAM_SUPPORT=yes install
 make -C nvm ROOT=%{buildroot} install
 
 # driver source
-mkdir -p %{buildroot}%{_usr}/src/%{name}-%{version}-%{release}
+mkdir -p %{buildroot}%{_usr}/src/%{name}-%{version}-%{release}/patches
 cp -r %{_sourcedir}/hsfbuild.sh %{_sourcedir}/hsfclean.sh config.mak modules \
 	%{buildroot}/%{_usr}/src/%{name}-%{version}-%{release}
 install -m 0755 -d \
@@ -201,7 +202,12 @@ MAKE[0]="sh hsfbuild.sh \${kernel_source_dir}"
 CLEAN="sh hsfclean.sh"
 
 AUTOINSTALL=yes
+PATCH[0]="hsfmodem-7.80.02.05-kernel-2.6.33.patch"
+PATCH_MATCH[0]="^2\.6\.(3[3-9])|([4-9][0-9]+)|([1-9][0-9][0-9]+)"
 EOF
+
+cp %{_sourcedir}/hsfmodem-7.80.02.05-kernel-2.6.33.patch \
+   %{buildroot}%{_usr}/src/%{name}-%{version}-%{release}/patches/
 
 %clean
 rm -rf %{buildroot}
