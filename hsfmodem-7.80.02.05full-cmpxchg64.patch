@@ -1,0 +1,14 @@
+Fix OsAtomicCompareAndSwapEx for x86 32 bits hosts and 64 bits address.
+
+diff -p -up hsfmodem-custom-7.80.02.05full/modules/osservices.c.orig hsfmodem-custom-7.80.02.04full/modules/osservices.c
+--- hsfmodem-custom-7.80.02.05full/modules/osservices.c.orig	2010-03-18 14:28:56.215072137 -0300
++++ hsfmodem-custom-7.80.02.05full/modules/osservices.c	2010-03-18 14:29:18.143323922 -0300
+@@ -310,7 +310,7 @@ BOOL OsAtomicCompareAndSwapEx (PVOID old
+ 	case sizeof(u32):
+ 		return (cmpxchg(((u32*)address), oldValue, newValue) == (u32)(ULONG_PTR)oldValue);
+ 	case sizeof(u64):
+-		return (cmpxchg(((u64*)address), oldValue, newValue) == (u64)(ULONG_PTR)oldValue);
++		return (cmpxchg64(((u64*)address), oldValue, newValue) == (u64)(ULONG_PTR)oldValue);
+ 	default:
+ 		printk(KERN_ERR"%s: size=%d not supported\n", __FUNCTION__, size);
+ 		return TRUE;

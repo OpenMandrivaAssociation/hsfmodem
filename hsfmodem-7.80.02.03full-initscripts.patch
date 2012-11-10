@@ -1,0 +1,23 @@
+diff -p -up hsfmodem-7.80.02.03full/scripts/cnxtconfig.in.orig hsfmodem-7.80.02.03full/scripts/cnxtconfig.in
+--- hsfmodem-7.80.02.03full/scripts/cnxtconfig.in.orig	2009-02-20 18:30:17.000000000 -0300
++++ hsfmodem-7.80.02.03full/scripts/cnxtconfig.in	2009-04-16 15:19:47.000000000 -0300
+@@ -1265,7 +1265,9 @@ old_scr_supported()
+ modules_exist()
+ {
+ 	files_present "/lib/modules/${OSKERNVERS}/misc/@CNXTTARGET@"*.${KO} ||
+-		files_present "/lib/modules/${OSKERNVERS}/extra/@CNXTTARGET@"*.${KO}
++		files_present "/lib/modules/${OSKERNVERS}/extra/@CNXTTARGET@"*.${KO} ||
++		files_present "/lib/modules/${OSKERNVERS}/kernel/drivers/char/@CNXTTARGET@"*.${KO}
++
+ }
+ 
+ remove_kernel_modules()
+@@ -2213,7 +2215,7 @@ identify_system()
+ 		ksyms=ksyms
+ 		;;
+ 	*)
+-		KO=ko
++		KO=ko.gz
+ 		ksyms=kallsyms
+ 		;;
+ 	esac

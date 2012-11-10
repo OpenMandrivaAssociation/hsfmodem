@@ -1,0 +1,7 @@
+sources:
+  "100498D_RM_HxF_Released.pdf:"	519c9b064e734873d67cf9c17d8eb1389a6f4eef
+  "hsfbuild.sh:"	e480663e3799349c78c137687a704e48de5c52f8
+  "hsfclean.sh:"	b347ff0c82f4f0c6f2e66f107b72f25f89687232
+  "hsfmodem-7.80.02.05full.tar.gz:"	5b6ef26e5221aa4de033a32e21278227fb81ace5
+  "hsfmodem-7.80.02.05-kernel-2.6.33.patch:"	b1d345c99a6346487383a9ec41345aceffea1d07
+  "hsfmodem-7.80.02.05x86_64full.tar.gz:"	e5021dcd55d7b5d33e75da26d1459b718bed58c1
