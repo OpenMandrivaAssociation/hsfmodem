@@ -8,45 +8,44 @@
 # agree to these terms before using or distributing this software.
 # 
 
-%define version		7.80.02.05
-%define release		%mkrel 4
-%define hxftarget	hsf
-%define hxftargetdir	%{_prefix}/lib/%{hxftarget}modem
-%define arch_packname()	%{name}-%{version}%{1}full
-%define packname32	%{arch_packname %{nil}}
-%define packname64	%{arch_packname x86_64}
+%define version 7.80.02.05
+%define release 5
+%define hxftarget hsf
+%define hxftargetdir %{_prefix}/lib/%{hxftarget}modem
+%define arch_packname() %{name}-%{version}%{1}full
+%define packname32 %{arch_packname %{nil}}
+%define packname64 %{arch_packname x86_64}
 %ifarch x86_64
-%define packname	%{packname64}
-%define packsrc		1
+%define packname %{packname64}
+%define packsrc 1
 %else
-%define packname	%{packname32}
-%define packsrc		0
+%define packname %{packname32}
+%define packsrc 0
 %endif
 
-Summary:   	Conexant HSF controllerless modem driver for Linux
-Name:      	%{hxftarget}modem
-Version:   	%version
-Release:   	%release
-License: 	Copyright (c) 2003 Linuxant inc. All rights reserved.
+Summary:	Conexant HSF controllerless modem driver for Linux
+Name:		%{hxftarget}modem
+Version:	%version
+Release:	%release
+License:	Copyright (c) 2003 Linuxant inc. All rights reserved.
 Group:		System/Kernel and hardware
-Source0:    	http://www.linuxant.com/drivers/hsf/full/archive/%{name}-%{version}/%{packname32}.tar.gz
-Source1:    	http://www.linuxant.com/drivers/hsf/full/archive/%{name}-%{version}/%{packname64}.tar.gz
-Source2:   	100498D_RM_HxF_Released.pdf
-Source3:   	hsfbuild.sh
-Source4:   	hsfclean.sh
+Source0:	http://www.linuxant.com/drivers/hsf/full/archive/%{name}-%{version}/%{packname32}.tar.gz
+Source1:	http://www.linuxant.com/drivers/hsf/full/archive/%{name}-%{version}/%{packname64}.tar.gz
+Source2:	100498D_RM_HxF_Released.pdf
+Source3:	hsfbuild.sh
+Source4:	hsfclean.sh
 Source5:	hsfmodem-7.80.02.05-kernel-2.6.33.patch
 Patch0:		hsfmodem-7.80.02.03full-disable_cfgkernel.patch
 Patch1:		hsfmodem-7.80.02.03full-initscripts.patch
 # (blino) gcc -v does not match pattern in some locales (at least french)
 Patch2:		hsfmodem-7.60.00.09full-locale.patch
 Patch3:		hsfmodem-7.80.02.05full-cmpxchg64.patch
-URL:       	http://www.linuxant.com/drivers/hcf
-BuildRoot:	%{_tmppath}/%{name}-buildroot
-Requires:  	pciutils
+URL:		http://www.linuxant.com/drivers/hcf
+Requires:	pciutils
 Requires:	drakxtools >= 9.2-7mdk
 Requires:	kmod(hsfengine)
-Conflicts: 	hsflinmodem
-ExclusiveArch:  %{ix86} x86_64
+Conflicts:	hsflinmodem
+ExclusiveArch:	%{ix86} x86_64
 
 %description
 Conexant HSF controllerless modem driver for Linux
@@ -112,17 +111,17 @@ You must also install the %{name}_kernel module if you want to utilize these
 drivers.
 
 %package -n dkms-%{name}
-Summary:   	Conexant HSF controllerless modem driver for Linux
-Group:		System/Kernel and hardware
+Summary:	Conexant HSF controllerless modem driver for Linux
+Group:	System/Kernel and hardware
 Requires(preun):	dkms
-Requires(post): dkms
+Requires(post):	dkms
 
 %description -n dkms-%{name}
-Conexant HSF controllerless modem driver support for Linux kernel %{kernel_version}
+Conexant HSF controllerless modem driver support for Linux kernel %{kernel_version}.
 
 %package doc
-Group:     	System/Kernel and hardware
-Summary:   	Documentation for Conexant HSF controllerless modems
+Group:		System/Kernel and hardware
+Summary:	Documentation for Conexant HSF controllerless modems
 
 %description doc
 This package contains the documentation for Conexant HSF controllerless modems.
@@ -141,7 +140,6 @@ make -C diag IMPORTED_BLAM_SUPPORT=yes
 cp %{SOURCE2} .
 
 %install
-rm -rf %{buildroot}
 make -C scripts ROOT=%{buildroot} install
 make -C diag ROOT=%{buildroot} IMPORTED_BLAM_SUPPORT=yes install
 make -C nvm ROOT=%{buildroot} install
@@ -209,9 +207,6 @@ EOF
 cp %{_sourcedir}/hsfmodem-7.80.02.05-kernel-2.6.33.patch \
    %{buildroot}%{_usr}/src/%{name}-%{version}-%{release}/patches/
 
-%clean
-rm -rf %{buildroot}
-
 %post
 %{_sbindir}/%{hxftarget}config --auto
 echo "Relaunch drakconnect to configure your Conexant HSF modem"
@@ -245,7 +240,6 @@ set -x
 %doc BUGS CHANGES CREDITS FAQ INSTALL LICENSE README
 
 %files -n dkms-%{name}
-%defattr(-,root,root)
 %doc README
 %doc LICENSE
 %dir %{_usr}/src/%{name}-%{version}-%{release}
