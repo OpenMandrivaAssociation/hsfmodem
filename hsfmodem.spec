@@ -40,7 +40,7 @@ Patch1:		hsfmodem-7.80.02.03full-initscripts.patch
 # (blino) gcc -v does not match pattern in some locales (at least french)
 Patch2:		hsfmodem-7.60.00.09full-locale.patch
 Patch3:		hsfmodem-7.80.02.05full-cmpxchg64.patch
-URL:		http://www.linuxant.com/drivers/hcf
+URL:		https://www.linuxant.com/drivers/hcf
 Requires:	pciutils
 Requires:	drakxtools >= 9.2-7mdk
 Requires:	kmod(hsfengine)
