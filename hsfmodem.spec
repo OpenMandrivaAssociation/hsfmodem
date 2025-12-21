@@ -47,6 +47,7 @@ Requires:	kmod(hsfengine)
 Conflicts:	hsflinmodem
 ExclusiveArch:	%{ix86} x86_64
 
+BuildRequires:	make
 %description
 Conexant HSF controllerless modem driver for Linux
 
